@@ -30,11 +30,12 @@ public class Side {
                          y corresponds to the row.
     
         Rep invariant:
-          - colors.size() == 3
-          - colors.get(i).size() == 3 for all valid i
+            - colors.size() == 3
+            - colors.get(i).size() == 3 for all valid i
     
         Safety from rep exposure
-          - TODO
+            - All fields are private and final
+            - Defensive copies are made whenever the rep is set or returned
      */
     
     /**
