@@ -35,8 +35,8 @@ public class Side {
     }
     
     /**
-     * @param x the column
-     * @param y the row
+     * @param x the column. Must be 0 <= x < 3
+     * @param y the row. Must be 0 <= y < 3
      * @return the color at (x,y) on the side
      */
     Color get(int x, int y) {
