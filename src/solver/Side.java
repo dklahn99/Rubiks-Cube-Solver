@@ -1,13 +1,26 @@
 package solver;
 
+import java.awt.Container;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /*
  * Immutable type representing a a 3x3 grid of colors
  */
 public class Side {
     
-    List<List<Color>> colors;
+    private final List<List<Color>> colors;
+    private static final int GRID_SIZE = 3;
+    private static final Map<Color, String> COLOR_KEYS = Collections.unmodifiableMap(Map.of(
+                Color.RED, "R",
+                Color.GREEN, "G",
+                Color.BLUE, "B",
+                Color.ORANGE, "O",
+                Color.WHITE, "W",
+                Color.YELLOW, "Y"
+            ));
     
     /*
         Abstraction function:
@@ -31,7 +44,29 @@ public class Side {
      * @param colors the 3x3 list of lists of colors
      */
     Side(List<List<Color>> colors) {
-        throw new RuntimeException("not yet implemented");
+        this.colors = new ArrayList<>();
+        for(List<Color> subList: colors) {
+            // Defensive copy of the input to avoid rep exposure
+            List<Color> copy = new ArrayList<>();
+            for(Color color: subList) {
+                copy.add(color);
+            }
+            
+            this.colors.add(copy);
+        }
+        
+        checkRep();
+    }
+    
+    /**
+     * Asserts the rep invarients of the data type
+     */
+    private void checkRep() {
+        assert colors.size() == GRID_SIZE;
+
+        for(List<Color> subList: colors) {
+            assert subList.size() == GRID_SIZE;
+        }
     }
     
     /**
@@ -40,7 +75,9 @@ public class Side {
      * @return the color at (x,y) on the side
      */
     Color get(int x, int y) {
-        throw new RuntimeException("not yet implemented");
+        checkRep();
+        
+        return colors.get(x).get(y);
     }
     
     /**
@@ -48,7 +85,20 @@ public class Side {
                and (0, 0) is the lower left corner of the side.
      */
     List<List<Color>> grid() {
-        throw new RuntimeException("not yet implemented");
+        checkRep();
+        
+        List<List<Color>> output = new ArrayList<>();
+        for(List<Color> subList: colors) {
+            // Defensive copy of the rep to avoid rep exposure
+            List<Color> copy = new ArrayList<>();
+            for(Color color: subList) {
+                copy.add(color);
+            }
+            
+            output.add(copy);
+        }
+        
+        return output;
     }
     
     /**
@@ -66,12 +116,25 @@ public class Side {
      */
     @Override
     public String toString() {
-        throw new RuntimeException("not yet implemented");
+        checkRep();
+        
+        List<String> rowStrings = new ArrayList<>();
+        for(List<Color> row: colors) {
+            String rowString = "";
+            for(Color color: row) {
+                rowString += COLOR_KEYS.get(color);
+            }
+            rowStrings.add(rowString);
+        }
+        
+        Collections.reverse(rowStrings);
+        return String.join("\n", rowStrings);
     }
     
     @Override
     public int hashCode() {
-        throw new RuntimeException("not yet implemented");
+        checkRep();
+        return colors.hashCode();
     }
     
 }

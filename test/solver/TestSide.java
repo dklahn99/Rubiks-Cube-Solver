@@ -66,7 +66,7 @@ public class TestSide {
         
         assertTrue(checkGetAndGrid(side, grid));
         
-        String expectedToString = "RBG\nOWY\nWRO";
+        String expectedToString = "WRO\nOWY\nRBG";
         assertEquals(expectedToString, side.toString());
     }
 }
